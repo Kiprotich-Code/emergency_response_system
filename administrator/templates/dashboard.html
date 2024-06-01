@@ -1,0 +1,234 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Response System</title>
+    <meta name="description"
+        content="Some tags are vital for SEO. Others have little or no impact on rankings. Here's every type of meta tag you need to know about.The purpose of a meta description is to reflect the essence of a page, but with more details and context." />
+    <meta property="og:title" content="The Rock" />
+    <meta property="og:type" content="video.movie" />
+    <meta property="og:url" content="https://www.imdb.com/title/tt0117500/" />
+    <meta property="og:image" content="https://ia.media-imdb.com/images/rock.jpg" />
+
+    <!-- Static Links - styling -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fontawesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/chart.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    <!-- <link rel="stylesheet" href="{% static 'css/light.css' %}"> light mode for admin panel -->
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-light can_have_sidenav">
+        <div class="container-fluid navbar-nav">
+            <div class="row w-100">
+                <div class="col-5 col-lg-4 ps-4 pe-4">
+                    <button class="btn btn-nav" onclick="toggle_sidenav()">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                </div>
+                <div class="col-lg-4 ps-4 pe-4 d-none d-lg-block">
+                    <div class="input-group nav-search d-none d-lg-inline-flex">
+                        <input type="text" class="form-control search-input" placeholder="Search...">
+                        <span>
+                            <i class="fa fa-search pe-3 ps-2 pt-2 text-white"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-3 col-lg-4 ps-4 pe-4 d-flex justify-content-end">
+                    <li class="nav-item dropdown d-none d-lg-inline-block">
+                        <a class="nav-link dropdown-toggle p-0" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <button class="btn btn-nav me-2">
+                                <i class="fa fa-globe"></i>
+                            </button>
+                            English
+                        </a>
+                        <!-- <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul> -->
+                    </li>
+
+                    <li class="nav-item dropdown d-inline-block ms-4 mobile-nav-3">
+                        <a class="nav-link dropdown-toggle p-0" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="{% static 'images/avatar.png' %}" class="me-lg-2 profile-img" width="40">
+                            <span class="d-none d-lg-inline-block">{{request.user}}</span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                        </ul>
+                    </li>
+
+                    <a href="#" class="d-lg-none float-end mobile-nav-4">
+                        <img src="{% static 'images/logo.png' %}" width="40" class="ms-3">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    {% block content %}
+    <div id="content" class="can_have_sidenav">
+        <div class="p-5">
+            <div class="row mb-3">
+                <div class="col-lg-4">
+                    <h3>
+                        Hi, Welcome back!
+                    </h3>
+                </div>
+                <div class="col-lg-5 mb-2">
+                </div>
+                <div class="col-lg-3 d-flex justify-content-end">
+                    <a href="{% url 'books'%}" class="btn btn-info ms-1 text-white">
+                        Manage Books
+                    </a>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-3 p-3">
+                    <div class="bg-warning p-4 text-white mb-3">
+                        <p class="mb-0 fw-bold">Books Total</p>
+                        <p class="mb-0 font-24 fw-bold">
+                            500
+                        </p>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-3 p-3">
+                    <div class="bg-danger p-4 text-white mb-3">
+                        <p class="mb-0 fw-bold">Books Borrowed</p>
+                        <p class="mb-0 font-24 fw-bold">
+                            20
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 p-3">
+                    <div class="bg-primary p-4 text-white mb-3">
+                        <p class="mb-0 fw-bold">Students Total</p>
+                        <p class="mb-0 font-24 fw-bold">
+                            200
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 p-3">
+                    <div class="bg-info p-4 text-white mb-3">
+                        <p class="mb-0 fw-bold">Membership Payments</p>
+                        <p class="mb-0 font-24 fw-bold">
+                           Ksh50.<span class="font-16">00</span>
+                        </p>
+                        <p class="mb-0 fw-bold">
+                            20.52% Since last month
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+
+    <div id="floating-menu">
+        <a href="">
+            <i class="fa fa-home mb-2"></i>
+        </a>
+        <hr>
+        <a href="">
+            <i class="fa fa-search mb-2"></i>
+        </a>
+        <hr>
+        <a href="">
+            <i class="fa fa-chart-bar"></i>
+        </a>
+    </div>
+
+    <div id="sidenav">
+        <div class="row mb-3">
+            <div class="col-4">
+                <img src="{% static 'images/mmtvc_logo.jpeg' %}" alt="Logo" class="img-fluid ms-4">
+            </div>
+            <div class="col-8 ps-4">
+                <p class="text-danger fw-bold mb-0">The</p>
+                <p class="mb-0 fw-bold">Librarian</p>
+            </div>
+        </div>
+
+        <a href="{% url 'dashboard'%}" class="this-page">
+            <i class="fa fa-home side-icon me-3"></i>
+            Dashboard
+        </a>
+
+        <a href="{% url 'books' %}">
+            <!-- <i class="fa fa-location-arrow side-icon me-3"></i> -->
+            <i class="fa fa-book side-icon me-3"></i>
+            Books
+        </a>
+
+        <!-- <a href="">
+            <i class="fa fa-user-friends side-icon me-3"></i>
+            Accounts
+        </a> -->
+
+        <a href="{% url 'all_borrowed_books' %}">
+            <i class="fa fa-list side-icon me-3"></i>
+            Lending
+        </a>
+
+        <a href="{% url 'book_return' %}">
+            <i class="fa fa-location-arrow side-icon me-3"></i>
+            Return
+        </a>
+
+        <a href="{% url 'payments' %}">
+            <!-- <i class="fa fa-location-arrow side-icon me-3"></i> -->
+            <i class="fa fa-chart-bar side-icon me-3"></i>
+            Payments
+        </a>
+
+        <p class="ms-4 mb-1 mt-3">Notification</p>
+
+        <a href="{% url 'feedbacks' %}">
+            <i class="fa fa-envelope side-icon me-3"></i>
+            Feedback
+        </a>
+
+        <a href="{% url 'user_contacts'%}">
+            <i class="fa fa-envelope-open-text side-icon me-3"></i>
+            Contact Us
+        </a>
+
+        <!-- <a href="#" class="ms-4 mt-5 ps-0">Notification</a> -->
+        <a href="{% url 'logout' %}" class="ms-4 ps-0">Sign Out</a>
+    </div>
+
+    <footer class="bg-light font-12 text-center text-lg-start">
+        <div class="text-center p-1">
+            © 2024 Copyright:
+            <a class="text-dark" href="{% url 'dashboard'%}">MMTVC - LIB</a>
+        </div>
+    </footer>
+
+    <!-- Static Javascript  -->
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/chart.min.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+    <script src="{% static 'js/pages/dashboard.js' %}"></script>
+</body>
+
+</html>

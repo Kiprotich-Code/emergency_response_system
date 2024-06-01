@@ -32,8 +32,8 @@ def signin(request):
             login(request, user)
             
             # redirect users based on roles
-            if user.user_type == 'hospital staff':
-                return redirect('hospitals_home')
+            if user.user_type == 'hospital':
+                return redirect('hospital_home')
             
             elif user.is_staff:
                 return redirect('dashboard')
@@ -47,4 +47,4 @@ def signin(request):
         'form': form
     }
         
-    return render(request, 'users/login.html', context)
+    return render(request, 'login.html', context)

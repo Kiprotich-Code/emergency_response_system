@@ -1,19 +1,23 @@
-{% extends 'main/index.html'%}
+{% include "index.html" %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
 
 {% block content %}
-<form method="POST">
-    {% csrf_token %}
-    <div class="col-md-6 m-auto p-sm-3 p-2">
+<div class="p-5">
+    <div class="col col-md-4 mx-auto mt-5 bg-dark text-white p-5 rounded">
         <h2>Login</h2>
-        <div class="mb-3">
-            <label for="username" class="form-label">Username: </label>
-            <input type="text" class="form-control" name="username">
-        </div>
-        <div class="mb-3">
-            <label for="password" class="form-label">Password: </label>
-            <input type="password" class="form-control" name="password">
-        </div>
-        <button type="submit" class="btn btn-primary">Login</button>
+        <hr>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group mb-4">
+                {{form.email}}
+            </div>
+
+            <div class="form-group mb-4">
+                {{form.password}}
+            </div>
+            <button type="submit" class="btn btn-outline-light">Login</button>
+        </form>
     </div>
-</form>
+</div>
 {% endblock %}

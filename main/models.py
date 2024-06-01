@@ -6,5 +6,5 @@ class Location(models.Model):
     lon = models.FloatField()
     lat = models.FloatField()
 
-    def _str__(self):
-        return self.address
+    def __str__(self):
+        return f'Location: {self.address}'

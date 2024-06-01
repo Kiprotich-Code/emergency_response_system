@@ -13,7 +13,7 @@ class ResponderRegisterForm(UserCreationForm):
 
     class Meta():
         model = CustomUser
-        fields = ['email', 'full_names', 'admission_no', 'password1', 'password2', ]
+        fields = ['email', 'full_names', 'password1', 'password2', ]
         widgets = {
             'email': forms.TextInput(attrs={'class': 'form-control',  'style': 'max-width: 600px', 'placeholder': 'Enter Email Address'}),
             'full_names': forms.TextInput(attrs={'class': 'form-control',  'style': 'max-width: 600px', 'placeholder': 'Enter Your Full Names'}),

@@ -4,12 +4,12 @@ from .managers import CustomUserManager
 
 # Create your models here. 
 class CustomUser(AbstractUser):
-    role = models.CharField(max_length=50, choices=[
+    role =[
         ('Admin', 'admin'),
         ('Responder', 'responder'),
         ('Hospital Staff', 'hospital staff'),
         ('Vehicle', 'vehicle'),
-    ])
+    ]
     
     username = None
     email = models.EmailField(unique=True)

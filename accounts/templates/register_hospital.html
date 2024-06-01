@@ -1,12 +1,12 @@
-{% extends '../main/index.html'%}
+{% include "index.html" %}
 {% load crispy_forms_filters %}
 {% load crispy_forms_tags %}
 
 {% block content %}
 <div class="p-4 col-md-5 m-auto mt-4">
-    <h3 class="fw-light">Create Account</h3>
+    <h3 class="fw-light">Register Hospital</h3>
     <hr>
-    <form action="{% url 'register'%}" method="POST">
+    <form action="{% url 'register_hospital'%}" method="POST">
         {% csrf_token %}
         {{ form | crispy }}
         <input type="submit" name="register" value="Signup" class="btn btn-outline-primary">

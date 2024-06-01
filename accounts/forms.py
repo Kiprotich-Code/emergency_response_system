@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import CustomUser
 
 # Create your forms here 
-class ResponderRegisterForm(UserCreationForm):
+class HospitalRegisterForm(UserCreationForm):
     password1 = forms.CharField(label='Enter password', widget=forms.PasswordInput(
         attrs={'class': 'form-control', 'style': 'max-width: 600px', 'placeholder': 'Enter Password'}
     ))
@@ -13,10 +13,11 @@ class ResponderRegisterForm(UserCreationForm):
 
     class Meta():
         model = CustomUser
-        fields = ['email', 'full_names', 'password1', 'password2', ]
+        fields = ['email', 'full_names', 'location', 'password1', 'password2', ]
         widgets = {
-            'email': forms.TextInput(attrs={'class': 'form-control',  'style': 'max-width: 600px', 'placeholder': 'Enter Email Address'}),
-            'full_names': forms.TextInput(attrs={'class': 'form-control',  'style': 'max-width: 600px', 'placeholder': 'Enter Your Full Names'}),
+            'email': forms.TextInput(attrs={'class': 'form-control',  'style': 'max-width: 600px', 'placeholder': "Hospital's Email Address"}),
+            'full_names': forms.TextInput(attrs={'class': 'form-control',  'style': 'max-width: 600px', 'placeholder': "Hospital's Name"}),
+            'location': forms.Select(attrs={'class': 'form-control',  'style': 'max-width: 600px', 'placeholder': "Hospital's Location"}),
         }
 
 

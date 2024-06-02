@@ -1,0 +1,10 @@
+{% extends './dashboard.html' %}
+
+{% block content %}
+<ul>
+    <li>{{user.email}}</li>
+    <li>{{user.full_names}}</li>
+    <li>{{user.user_type}}</li>
+    <li>{{user.location}}</li>
+</ul>
+{% endblock %}

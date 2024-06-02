@@ -1,0 +1,17 @@
+{% extends './dashboard.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="p-5">
+    <div class="col col-md-4 mx-auto mt-5 bg-dark text-white p-5 rounded">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group mb-4">
+                {{form}}                
+            </div>
+            <button type="submit" class="btn btn-outline-light">Login</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

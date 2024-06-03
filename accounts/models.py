@@ -6,7 +6,6 @@ from main.models import Location
 # Create your models here. 
 class CustomUser(AbstractUser):
     role =[
-        ('Admin', 'admin'),
         ('Responder', 'responder'),
         ('Hospital', 'hospital'),
         ('Vehicle', 'vehicle'),
@@ -17,6 +16,7 @@ class CustomUser(AbstractUser):
     full_names = models.CharField(max_length=100, blank=True)
     user_type = models.CharField(max_length=20, choices=role, default='Responder')
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
+    date_joined = models.DateField(auto_now_add=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['full_names', 'location', ]
 

@@ -48,3 +48,8 @@ def signin(request):
     }
         
     return render(request, 'login.html', context)
+
+
+def signout(request):
+    logout(request)
+    return redirect('index')

@@ -34,7 +34,7 @@
             <div class="row w-100">
                 <div class="col-5 col-lg-4 ps-4 pe-4">
                     <button class="btn btn-nav" onclick="toggle_sidenav()">
-                        <i class="fa fa-bars"></i>
+                        <i class="fa fa-bars text-white"></i>
                     </button>
                 </div>
                 <div class="col-lg-4 ps-4 pe-4 d-none d-lg-block">
@@ -50,7 +50,7 @@
                         <a class="nav-link dropdown-toggle p-0" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <button class="btn btn-nav me-2">
-                                <i class="fa fa-globe"></i>
+                                <i class="fa fa-globe text-white"></i>
                             </button>
                             English
                         </a>
@@ -71,7 +71,7 @@
                             <span class="d-none d-lg-inline-block">{{request.user}}</span>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="">Logout</a></li>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
                         </ul>
                     </li>
 
@@ -187,7 +187,7 @@
             Accounts
         </a> -->
 
-        <a href="">
+        <a href="{% url 'user_list'%}">
             <i class="fa fa-list side-icon me-3"></i>
             Users
         </a>

@@ -1,0 +1,15 @@
+{% extends '../dashboard.html' %}
+
+{% block content %}
+<div id="content" class="can_have_sidenav">
+    <div class="p-5">
+        <form action="" method="post">
+            {% csrf_token %}
+            <p>
+                Are you sure you want to delete {{user}} ?
+            </p>
+            <input type="submit" class="btn btn-outline-danger" value="Confirm">
+        </form>
+    </div>
+</div>
+{% endblock %}

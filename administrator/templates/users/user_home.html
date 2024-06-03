@@ -1,0 +1,122 @@
+{% extends '../dashboard.html' %}
+
+{% block content %}
+<div id="content" class="can_have_sidenav">
+    <div class="p-3">
+        {% block items %}
+        <h3 class="fw-lighter small"># Users</h3>
+        <div class="row">
+            <div class="col-12 col-lg-8 mb-4 mb-lg-0">
+                {% if users %}
+                <div class="card">
+                    <h5 class="card-header">Users</h5>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">User ID</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Type</th>
+                                        <th scope="col">Location</th>
+                                        <th scope="col">#</th>
+                                        <th scope="col">#</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for user in users %}
+                                    <tr>
+                                        <td>{{user.id}}</td>
+                                        <td>{{user.email}}</td>
+                                        <td>{{user.full_names}}</td>
+                                        <td>{{user.user_type}}</td>
+                                        <td>{{user.location}}</td>
+                                        <td>
+                                            <a href="{% url 'user_update' user.id %}"
+                                                class="btn btn-sm btn-outline-primary">Update</a>
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'user_delete' user.id %}"
+                                                class="btn btn-sm btn-outline-danger">Delete</a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        {% comment %} pagination {% endcomment %}
+                        <div class='pagination justify-content-center'>
+                            {% if page_obj.has_previous %}
+                            <a href='{% url "user_list" %}?page={{ page_obj.previous_page_number }}'
+                                class="text-decoration-none">Previous </a>
+                            {% endif %}
+
+                            <span class='mx-4'>
+                                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                            </span>
+
+                            {% if page_obj.has_next %}
+                            <a href='{ url "user_list" }?page={{ page_obj.next_page_number }}'
+                                class="text-decoration-none"> Next</a>
+                            {% endif %}
+                        </div>
+                        <!-- END Pagination -->
+                    </div>
+                </div>
+                {% else %}
+                <div class="py-5">
+                    <h3>
+                        There are no users at the moment! Since you're the admin, you can add some books.
+                    </h3>
+                    <a class="btn btn-outline-primary" href="{% url 'add_user' %}">Add Users</a>
+                </div>
+                {% endif %}
+            </div>
+            {% endblock %}
+            <div class="col">
+                <div class="card mb-3">
+                    <h5 class="card-header">Manage Users</h5>
+                    <div class="card-body gap-5">
+                        <a class="btn btn-block btn-warning mb-3" href="{% url 'add_user'%}">Add User</a>
+                        <a class="btn btn-block btn-primary mb-3" href="{% url 'user_list'%}">All Users</a>
+                        <a class="btn btn-block btn-info mb-3" href="{% url 'user_list'%}">Recent</a>
+                        <a class="btn btn-block btn-dark mb-3" href="{% url 'hospital_users' %}">Hospitals</a>
+                        <a class="btn btn-block btn-secondary mb-3" href="{% url 'responder_users' %}">Responders</a>
+                        <a class="btn btn-block btn-outline-dark mb-3" href="{% url 'vehicle_users' %}">Vehicles</a>
+                    </div>
+                </div>
+
+                <div class="card mb-3">
+                    <h5 class="card-header">Recent</h5>
+                    {% if recent_users %}
+                    <div class="p-3">
+                        {% for user in recent_users %}
+
+                        <p>
+                            <strong>{{user.user_type}}</strong>: {{user.full_names}} <a href="">details.</a>
+                        </p>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="card-body">
+                        <p class="fw-lighter">
+                            Recently added users will appear here!
+                        </p>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="card">
+                    <h5 class="card-header">Chart</h5>
+                    <div class="card-body">
+                        <div class="card-text fw-lighter">Charts Will Appear Here!</div>
+                        <div id="traffic-chart"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

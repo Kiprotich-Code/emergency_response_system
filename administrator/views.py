@@ -237,3 +237,28 @@ def assign_incidence(request, incidence_pk, responder_pk):
     }
         
     return render(request, 'response/assign_incedence.html', context)
+
+
+def assign_all_nearby_responders(request, incidence_pk):
+    incidence = get_object_or_404(Incidence, pk=incidence_pk)
+    location = incidence.location
+    nearby_responders = find_nearby_responders(location.lat, location.lon, radius=10)  # Adjust radius as needed
+    
+    if request.method == 'POST':
+        response = Response.objects.create(
+            incident=incidence,
+            message="Assigned to all nearby responders."
+        )
+        for responder in nearby_responders:
+            response.responders.add(responder)
+        response.save()
+        incidence.status = 'assigned'
+        incidence.save()
+        return redirect('pending_incidents')  # Adjust the redirect as necessary
+
+    context = {
+        'incidence': incidence,
+        'responders': nearby_responders,
+    }
+    
+    return render(request, 'response/assign_all_nearby_responders.html', context)

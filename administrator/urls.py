@@ -32,4 +32,7 @@ urlpatterns = [
     path('pending_incidents/', views.pending_incidents, name='pending_incidents'),
     path('nearby_responders/<int:pk>', views.nearby_responders, name='nearby_responders'),
     path('incidents/<int:incidence_pk>/assign/<int:responder_pk>/', views.assign_incidence, name='assign_incedence'),
+
+    # Assign Incidents to all responders 
+    path('incidents/<int:incidence_pk>/assign_all/', views.assign_all_nearby_responders, name='assign_all_nearby_responders'),
 ]

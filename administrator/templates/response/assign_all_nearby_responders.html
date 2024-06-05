@@ -1,0 +1,22 @@
+{% extends '../dashboard.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div id="content" class="can_have_sidenav">
+    <div class="p-3">
+        <div class="col col-lg-8 p-3 border roundend">
+            <h3 class="fw-lighter small"># Assign Incidence to All Responders within 10Km Radius</h3>
+            <form method="POST">
+                <h3>{{incidence.incidence_type}} at {{incidence.location}}</h3>
+                <hr>
+                {% csrf_token %}
+                <div class="form-group mb-4">
+                    {{ form|crispy }}
+                </div>
+                <button type="submit" class="btn btn-danger">Assign</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

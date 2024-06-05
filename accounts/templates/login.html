@@ -1,23 +1,35 @@
-{% include "index.html" %}
+{% extends './register_hospital.html' %}
+{% load static %}
 {% load crispy_forms_filters %}
 {% load crispy_forms_tags %}
 
 {% block content %}
 <div class="p-5">
-    <div class="col col-md-4 mx-auto mt-5 bg-dark text-white p-5 rounded">
-        <h2>Login</h2>
-        <hr>
-        <form method="POST">
-            {% csrf_token %}
-            <div class="form-group mb-4">
-                {{form.email}}
+    <div class="row border p-3">
+        <div class="col">
+            <img src="{% static 'images/lg.jpg'%}" alt="" style="width: 100%; height: 100%;">
+        </div>
+        <div class="col">
+            {% if messages %}
+            <div class="text-danger">
+                {% for message in messages %}
+                <p>{{message}}</p>
+                {% endfor %}
             </div>
+            {% endif %}
+            <h2 class="lh-lg border border-top-0 border-end-0 border-start-0 w-50 mb-3">Login</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group mb-4">
+                    {{form.email}}
+                </div>
 
-            <div class="form-group mb-4">
-                {{form.password}}
-            </div>
-            <button type="submit" class="btn btn-outline-light">Login</button>
-        </form>
+                <div class="form-group mb-4">
+                    {{form.password}}
+                </div>
+                <button type="submit" class="btn btn-outline-primary">Login</button>
+            </form>
+        </div>
     </div>
 </div>
 {% endblock %}

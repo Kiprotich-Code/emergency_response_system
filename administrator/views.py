@@ -1,7 +1,10 @@
-from django.shortcuts import render
 from django.shortcuts import render, redirect, get_object_or_404
 from accounts.models import CustomUser
 from .forms import CustomUserCreationForm, CustomUserChangeForm
+from .models import Calls, Incidence, Response
+from .forms import RecordCallForm, IncidenceForm, AssignResponseForm
+from django.contrib.auth.decorators import login_required
+from .harversine import find_nearby_responders, haversine
 
 # Create your views here.
 def dashboard(request):
@@ -82,3 +85,128 @@ def responder_users(request):
         'users': users
     }
     return render(request, 'users/responders_list.html', context)
+
+
+# Admin - managing calls 
+# Calls - admin managing calls 
+def record_call(request):
+    if request.method == 'POST':
+        form = RecordCallForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('calls')
+    else:
+        form = RecordCallForm()
+    return render(request, 'calls/record_call.html', {'form': form})
+
+# Read
+def calls(request):
+    calls = Calls.objects.all().order_by('-time_of_call')
+    recent_calls = Calls.objects.all().order_by('-time_of_call')[0:3]
+    context = {
+        'calls': calls,
+        'recent_calls': recent_calls
+    }
+    return render(request, 'calls/calls.html', context)
+
+
+def call_details(request, pk):
+    call = get_object_or_404(Calls, pk=pk)
+    context = {'call': call}
+    return render(request, 'calls/call_details.html', context)
+
+# Update
+def call_update(request, pk):
+    call = get_object_or_404(Calls, pk=pk)
+    if request.method == 'POST':
+        form = RecordCallForm(request.POST, instance=call)
+        if form.is_valid():
+            form.save()
+            return redirect('calls')
+    else:
+        form = RecordCallForm(instance=call)
+
+    context = {'form': form}
+    return render(request, 'calls/call_update.html', context)
+
+
+# Admin Views - Manage Incidences 
+# Retrieve
+def incidents(request):
+    incidents = Incidence.objects.all().order_by('-time_of_incident')
+    recent_incidents = Incidence.objects.all().order_by('-time_of_incident')[0:3]
+
+    context = {
+        'incidents': incidents,
+        'recent_incidents': recent_incidents
+    }
+
+    return render(request, 'incidents/incidents.html', context)
+
+# Create
+def add_incident(request):
+    if request.method == 'POST':
+        form = IncidenceForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('incidents')
+        
+    else:
+        form = IncidenceForm()
+
+    context = {
+        'form': form
+    }
+    return render(request, 'incidents/add_incident.html', context)
+
+
+# Update
+def incident_update(request, pk):
+    incident = get_object_or_404(Incidence, pk=pk)
+    if request.method == 'POST':
+        form = IncidenceForm(request.POST, instance=incident)
+        if form.is_valid():
+            form.save()
+            return redirect('incidents')
+    else:
+        form = IncidenceForm(instance=incident)
+    return render(request, 'incidents/incident_update.html', {'form': form})
+
+# Delete
+def incident_delete(request, pk):
+    incident = get_object_or_404(Incidence, pk=pk)
+    if request.method == 'POST':
+        incident.delete()
+        return redirect('incidents')
+    return render(request, 'incidents/incident_confirm_delete.html', {'incident': incident})
+
+
+def incident_details(request, pk):
+    incident = get_object_or_404(Incidence, pk=pk)
+    context = {'incident': incident}
+    return render(request, 'incidents/incident_details.html', context)
+
+
+# MVP - ASSIGNING INCIDENCES TO RESPONDERS 
+# list view 
+def pending_incidents(request):
+    pending_incidences = Incidence.objects.filter(status__in=['Pending', 'pending'])
+
+    context = {
+        'pending_incidences': pending_incidences
+    }
+
+    return render(request, 'response/pending_incidences.html', context)
+
+
+def assign_incidence(request, pk):
+    incidence = get_object_or_404(Incidence, pk=pk)
+    location = incidence.location
+    responders = find_nearby_responders(location.lat, location.lon, radius=10)
+
+    context = {
+        'incidence': incidence,
+        'responders': responders
+    }
+
+    return render(request, 'response/assign_incidences.html', context)

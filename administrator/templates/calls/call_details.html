@@ -1,0 +1,22 @@
+{% extends '../dashboard.html' %}
+
+{% block content %}
+<div id="content" class="can_have_sidenav">
+    <div class="p-3">
+        <h5 class="small fw-lighter"># Call Details</h5>
+        <div class="col col-md-6">
+            <div class="card mb-3">
+                <h5 class="card-header fw-lighter"><strong>Call from: </strong>0{{call.caller_phone}}</h5>
+                <div class="card-body">
+                   <h5 class="fw-lighter"><strong>Made at:</strong> {{call.time_of_call}}</h5>
+                   <h5 class="fw-lighter"><strong>Caller:</strong> {{call.caller_name}}</h5>
+                   <h5 class="fw-lighter"><strong>Priority:</strong> {{call.priority}}</h5>
+                   <h5 class="fw-lighter mb-3"><strong>Location:</strong> {{call.location}}</h5>
+                    <a class="btn btn-block btn-outline-dark mb-3" href="{% url 'call_update' call.id %}">Update Call</a>
+                    <a class="btn btn-block btn-outline-primary mb-3" href="{% url 'calls'%}">All Calls</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login, logout
 from .forms import LoginForm, HospitalRegisterForm
+from django.contrib import messages
 
 # Create your views here.
 def register_hospital(request):
@@ -11,7 +12,11 @@ def register_hospital(request):
             user = form.save(commit=False)
             user.user_type = 'hospital'
             user.save()
+            messages.success(request, ('Successfully registered!'))
             return redirect('login')
+
+        else:
+            messages.error(request, 'Enter Valid Details and Try Again!')
         
     else:
         form = HospitalRegisterForm()
@@ -33,13 +38,16 @@ def signin(request):
             
             # redirect users based on roles
             if user.user_type == 'hospital':
+                messages.success(request, 'Login successful!')
                 return redirect('hospital_home')
             
             elif user.is_staff:
+                messages.success(request, 'Login successful!')
                 return redirect('dashboard')
-            
+        
         else:
-            return redirect('login') 
+            messages.error(request, 'User Does Not Exist!')
+            return redirect('login')
 
     else:
         form = LoginForm()

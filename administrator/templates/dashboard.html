@@ -176,19 +176,25 @@
             Dashboard
         </a>
 
-        <a href="">
+        <a href="{% url 'calls' %}">
             <!-- <i class="fa fa-location-arrow side-icon me-3"></i> -->
             <i class="fa fa-book side-icon me-3"></i>
+            Calls
+        </a>
+
+        <a href="{% url 'incidents' %}">
+            <!-- <i class="fa fa-location-arrow side-icon me-3"></i> -->
+            <i class="fa fa-list side-icon me-3"></i>
             Incidences
         </a>
 
-        <!-- <a href="">
+        <a href="{% url 'pending_incidents'%}">
             <i class="fa fa-user-friends side-icon me-3"></i>
-            Accounts
-        </a> -->
+            Assign
+        </a>
 
         <a href="{% url 'user_list'%}">
-            <i class="fa fa-list side-icon me-3"></i>
+            <i class="fa fa-user-friends side-icon me-3"></i>
             Users
         </a>
 

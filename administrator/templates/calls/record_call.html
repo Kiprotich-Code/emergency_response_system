@@ -1,0 +1,64 @@
+{% extends '../dashboard.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div id="content" class="can_have_sidenav">
+    <div class="row p-3">
+        <div class="col col-lg-8 p-3 border roundend">
+            <h5 class="small fw-lighter"># Manage Calls</h5>
+            <form method="POST">
+                <h3>Record Call</h3>
+                <hr>
+                {% csrf_token %}
+                <div class="form-group mb-4">
+                    {{ form|crispy }}
+                </div>
+                <button type="submit" class="btn btn-primary">Record Call</button>
+            </form>
+        </div>
+
+        <div class="col">
+            <div class="card mb-3">
+                <h5 class="card-header">Manage Users</h5>
+                <div class="card-body gap-5">
+                    <a class="btn btn-block btn-warning mb-3" href="{% url 'add_user'%}">Add User</a>
+                    <a class="btn btn-block btn-primary mb-3" href="{% url 'user_list'%}">All Users</a>
+                    <a class="btn btn-block btn-info mb-3" href="{% url 'user_list'%}">Recent</a>
+                    <a class="btn btn-block btn-dark mb-3" href="{% url 'hospital_users' %}">Hospitals</a>
+                    <a class="btn btn-block btn-secondary mb-3" href="{% url 'responder_users' %}">Responders</a>
+                    <a class="btn btn-block btn-outline-dark mb-3" href="{% url 'vehicle_users' %}">Vehicles</a>
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <h5 class="card-header">Recent</h5>
+                {% if recent_users %}
+                <div class="p-3">
+                    {% for user in recent_users %}
+
+                    <p>
+                        <strong>{{user.user_type}}</strong>: {{user.full_names}} <a href="">details.</a>
+                    </p>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="card-body">
+                    <p class="fw-lighter">
+                        Recently added users will appear here!
+                    </p>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="card">
+                <h5 class="card-header">Chart</h5>
+                <div class="card-body">
+                    <div class="card-text fw-lighter">Charts Will Appear Here!</div>
+                    <div id="traffic-chart"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

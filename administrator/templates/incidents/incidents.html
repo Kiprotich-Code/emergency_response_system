@@ -74,15 +74,14 @@
             </div>
             {% endblock %}
             <div class="col">
-                <div class="card mb-3">
-                    <h5 class="card-header">Manage Users</h5>
-                    <div class="card-body gap-5">
-                        <a class="btn btn-block btn-warning mb-3" href="{% url 'add_user'%}">Add User</a>
-                        <a class="btn btn-block btn-primary mb-3" href="{% url 'user_list'%}">All Users</a>
-                        <a class="btn btn-block btn-info mb-3" href="{% url 'user_list'%}">Recent</a>
-                        <a class="btn btn-block btn-dark mb-3" href="{% url 'hospital_users' %}">Hospitals</a>
-                        <a class="btn btn-block btn-secondary mb-3" href="{% url 'responder_users' %}">Responders</a>
-                        <a class="btn btn-block btn-outline-dark mb-3" href="{% url 'vehicle_users' %}">Vehicles</a>
+                <div class="col">
+                    <div class="card mb-3">
+                        <h5 class="card-header">Manage</h5>
+                        <div class="card-body gap-5">
+                            <a class="btn btn-block btn-warning mb-3" href="{% url 'incidents'%}">All</a>
+                            <a class="btn btn-block btn-primary mb-3" href="{% url 'add_incident'%}">Record</a>
+                            <a class="btn btn-block btn-info mb-3" href="{% url 'incidents'%}">Recent</a>
+                        </div>
                     </div>
                 </div>
 

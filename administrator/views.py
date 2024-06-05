@@ -199,7 +199,7 @@ def pending_incidents(request):
     return render(request, 'response/pending_incidences.html', context)
 
 
-def assign_incidence(request, pk):
+def nearby_responders(request, pk):
     incidence = get_object_or_404(Incidence, pk=pk)
     location = incidence.location
     responders = find_nearby_responders(location.lat, location.lon, radius=10)
@@ -209,4 +209,31 @@ def assign_incidence(request, pk):
         'responders': responders
     }
 
-    return render(request, 'response/assign_incidences.html', context)
+    return render(request, 'response/nearby_responders.html', context)
+
+
+def assign_incidence(request, incidence_pk, responder_pk):
+    incidence = get_object_or_404(Incidence, pk=incidence_pk)
+    responder = get_object_or_404(CustomUser, pk=responder_pk)
+    
+    if request.method == 'POST':
+        form = AssignResponseForm(request.POST)
+        if form.is_valid():
+            response = form.save(commit=False)
+            response.incident = incidence
+            response.save()
+            response.responders.add(responder)
+            response.save()
+            incidence.status = 'assigned'
+            incidence.save()
+            return redirect('pending_incidents')
+    else:
+        form = AssignResponseForm()
+
+    context = {
+        'form': form,
+        'incidence': incidence,
+        'responder': responder,
+    }
+        
+    return render(request, 'response/assign_incedence.html', context)

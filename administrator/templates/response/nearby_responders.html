@@ -4,6 +4,7 @@
 <div id="content" class="can_have_sidenav">
     <div class="p-3">
         {% block items %}
+        Nearby responders for: {{incidence }}
         <h3 class="fw-lighter small"># Responders Within 10Km Radius </h3>
         <div class="row">
             <div class="col-12 col-lg-8 mb-4 mb-lg-0">
@@ -15,7 +16,7 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th scope="col">ID</th>
+                                        <th scope="col">USER ID</th>
                                         <th scope="col">Type</th>
                                         <th scope="col">Name</th>
                                         <th scope="col">Location</th>
@@ -24,6 +25,7 @@
                                         </th>
                                     </tr>
                                 </thead>
+                                
                                 <tbody>
                                     {% for responder in responders %}
                                     <tr>
@@ -32,7 +34,7 @@
                                         <td>{{responder.full_names}}</td>
                                         <td>{{responder.location}}</td>
                                         <td>
-                                            <a href="" class="btn btn-sm btn-danger">Assign</a>
+                                            <a href="{% url 'assign_incedence' incidence.id responder.id %}" class="btn btn-sm btn-danger">Assign</a>
                                         </td>
                                     </tr>
                                     {% endfor %}

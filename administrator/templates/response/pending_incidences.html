@@ -30,7 +30,7 @@
                                         <td>{{incident.time_of_incident}}</td>
                                         <td>{{incident.location}}</td>
                                         <td>
-                                            <a href="{% url 'assign_incidence' incident.id %}"
+                                            <a href="{% url 'nearby_responders' incident.id %}"
                                                 class="btn btn-sm btn-danger">Assign</a>
                                         </td>
                                     </tr>

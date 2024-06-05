@@ -30,5 +30,6 @@ urlpatterns = [
 
     # Assign Incidents
     path('pending_incidents/', views.pending_incidents, name='pending_incidents'),
-    path('assign_incidence/<int:pk>', views.assign_incidence, name='assign_incidence'),
+    path('nearby_responders/<int:pk>', views.nearby_responders, name='nearby_responders'),
+    path('incidents/<int:incidence_pk>/assign/<int:responder_pk>/', views.assign_incidence, name='assign_incedence'),
 ]

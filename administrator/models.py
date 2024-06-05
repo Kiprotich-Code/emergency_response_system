@@ -23,8 +23,9 @@ class Calls(models.Model):
 class Incidence(models.Model):
     choices = [
         ('pending', 'Pending'),
-        ('resolved', 'Resolved'),
+        ('assigned', 'Assigned'),
         ('cancelled', 'Cancelled'),
+        ('closed', 'Closed'),
     ]
 
     incidence_type = models.CharField(max_length=100)

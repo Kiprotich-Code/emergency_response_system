@@ -1,17 +1,36 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from accounts.models import CustomUser
-from .forms import CustomUserCreationForm, CustomUserChangeForm
-from .models import Calls, Incidence, Response
-from .forms import RecordCallForm, IncidenceForm, AssignResponseForm
-from django.contrib.auth.decorators import login_required
+from .models import Calls, Incidence, Response, CustomUser
+from .forms import RecordCallForm, IncidenceForm, AssignResponseForm, CustomUserCreationForm, CustomUserChangeForm
+from django.contrib.auth.decorators import login_required, user_passes_test
 from .harversine import find_nearby_responders, haversine
 
 # Create your views here.
+def is_superuser(request):
+    return is_superuser
+
+@login_required
+@user_passes_test(is_superuser)
 def dashboard(request):
     return render(request, 'dashboard.html')
 
+# ADMIN - UPDATE PROFILE 
+@login_required
+@user_passes_test(is_superuser)
+def update_profile(request):
+    if request.method == 'POST':
+        form = CustomUserChangeForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('update_profile')
+    else:
+        form = CustomUserChangeForm(instance=request.user)
+    return render(request, 'users/profile.html', {'form': form})
+
+
 # Admin - User Management 
 # Create
+@login_required
+@user_passes_test(is_superuser)
 def user_create(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
@@ -23,6 +42,8 @@ def user_create(request):
     return render(request, 'users/user_form.html', {'form': form})
 
 # Read
+@login_required
+@user_passes_test(is_superuser)
 def user_list(request):
     users = CustomUser.objects.all().order_by('-date_joined')
     recent_users = CustomUser.objects.all().order_by('-date_joined')[0:3]
@@ -32,11 +53,15 @@ def user_list(request):
     }
     return render(request, 'users/user_home.html', context)
 
+@login_required
+@user_passes_test(is_superuser)
 def user_detail(request, pk):
     user = get_object_or_404(CustomUser, pk=pk)
     return render(request, 'users/user_detail.html', {'user': user})
 
 # Update
+@login_required
+@user_passes_test(is_superuser)
 def user_update(request, pk):
     user = get_object_or_404(CustomUser, pk=pk)
     if request.method == 'POST':
@@ -49,6 +74,8 @@ def user_update(request, pk):
     return render(request, 'users/user_update.html', {'form': form})
 
 # Delete
+@login_required
+@user_passes_test(is_superuser)
 def user_delete(request, pk):
     user = get_object_or_404(CustomUser, pk=pk)
     if request.method == 'POST':
@@ -58,6 +85,8 @@ def user_delete(request, pk):
 
 
 # Extras - Views on Users 
+@login_required
+@user_passes_test(is_superuser)
 def recent_users(request):
     recent_users = CustomUser.objects.all().order_by('-date_joined')[0:3]
     context = {
@@ -65,6 +94,8 @@ def recent_users(request):
     }
     return render(request, 'users/recent_users', context)
 
+@login_required
+@user_passes_test(is_superuser)
 def hospital_users(request):
     users = CustomUser.objects.filter(user_type__in=['Hospital', 'hospital']).order_by('-date_joined')
     context = {
@@ -72,6 +103,8 @@ def hospital_users(request):
     }
     return render(request, 'users/hospitals_list.html', context)
 
+@login_required
+@user_passes_test(is_superuser)
 def vehicle_users(request):
     users = CustomUser.objects.filter(user_type__in=['vehicle', 'Vehicle']).order_by('-date_joined')
     context = {
@@ -79,6 +112,8 @@ def vehicle_users(request):
     }
     return render(request, 'users/vehicles_list.html', context)
 
+@login_required
+@user_passes_test(is_superuser)
 def responder_users(request):
     users = CustomUser.objects.filter(user_type__in=['Responder', 'responder']).order_by('-date_joined')
     context = {
@@ -89,6 +124,8 @@ def responder_users(request):
 
 # Admin - managing calls 
 # Calls - admin managing calls 
+@login_required
+@user_passes_test(is_superuser)
 def record_call(request):
     if request.method == 'POST':
         form = RecordCallForm(request.POST)
@@ -100,6 +137,8 @@ def record_call(request):
     return render(request, 'calls/record_call.html', {'form': form})
 
 # Read
+@login_required
+@user_passes_test(is_superuser)
 def calls(request):
     calls = Calls.objects.all().order_by('-time_of_call')
     recent_calls = Calls.objects.all().order_by('-time_of_call')[0:3]
@@ -110,12 +149,16 @@ def calls(request):
     return render(request, 'calls/calls.html', context)
 
 
+@login_required
+@user_passes_test(is_superuser)
 def call_details(request, pk):
     call = get_object_or_404(Calls, pk=pk)
     context = {'call': call}
     return render(request, 'calls/call_details.html', context)
 
 # Update
+@login_required
+@user_passes_test(is_superuser)
 def call_update(request, pk):
     call = get_object_or_404(Calls, pk=pk)
     if request.method == 'POST':
@@ -132,6 +175,8 @@ def call_update(request, pk):
 
 # Admin Views - Manage Incidences 
 # Retrieve
+@login_required
+@user_passes_test(is_superuser)
 def incidents(request):
     incidents = Incidence.objects.all().order_by('-time_of_incident')
     recent_incidents = Incidence.objects.all().order_by('-time_of_incident')[0:3]
@@ -144,6 +189,8 @@ def incidents(request):
     return render(request, 'incidents/incidents.html', context)
 
 # Create
+@login_required
+@user_passes_test(is_superuser)
 def add_incident(request):
     if request.method == 'POST':
         form = IncidenceForm(request.POST)
@@ -161,6 +208,8 @@ def add_incident(request):
 
 
 # Update
+@login_required
+@user_passes_test(is_superuser)
 def incident_update(request, pk):
     incident = get_object_or_404(Incidence, pk=pk)
     if request.method == 'POST':
@@ -173,6 +222,8 @@ def incident_update(request, pk):
     return render(request, 'incidents/incident_update.html', {'form': form})
 
 # Delete
+@login_required
+@user_passes_test(is_superuser)
 def incident_delete(request, pk):
     incident = get_object_or_404(Incidence, pk=pk)
     if request.method == 'POST':
@@ -181,6 +232,8 @@ def incident_delete(request, pk):
     return render(request, 'incidents/incident_confirm_delete.html', {'incident': incident})
 
 
+@login_required
+@user_passes_test(is_superuser)
 def incident_details(request, pk):
     incident = get_object_or_404(Incidence, pk=pk)
     context = {'incident': incident}
@@ -189,6 +242,8 @@ def incident_details(request, pk):
 
 # MVP - ASSIGNING INCIDENCES TO RESPONDERS 
 # list view 
+@login_required
+@user_passes_test(is_superuser)
 def pending_incidents(request):
     pending_incidences = Incidence.objects.filter(status__in=['Pending', 'pending'])
 
@@ -199,6 +254,8 @@ def pending_incidents(request):
     return render(request, 'response/pending_incidences.html', context)
 
 
+@login_required
+@user_passes_test(is_superuser)
 def nearby_responders(request, pk):
     incidence = get_object_or_404(Incidence, pk=pk)
     location = incidence.location
@@ -212,6 +269,8 @@ def nearby_responders(request, pk):
     return render(request, 'response/nearby_responders.html', context)
 
 
+@login_required
+@user_passes_test(is_superuser)
 def assign_incidence(request, incidence_pk, responder_pk):
     incidence = get_object_or_404(Incidence, pk=incidence_pk)
     responder = get_object_or_404(CustomUser, pk=responder_pk)
@@ -239,6 +298,8 @@ def assign_incidence(request, incidence_pk, responder_pk):
     return render(request, 'response/assign_incedence.html', context)
 
 
+@login_required
+@user_passes_test(is_superuser)
 def assign_all_nearby_responders(request, incidence_pk):
     incidence = get_object_or_404(Incidence, pk=incidence_pk)
     location = incidence.location

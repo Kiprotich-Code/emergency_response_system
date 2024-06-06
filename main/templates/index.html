@@ -24,22 +24,34 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            {% if user.is_authenticated %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  Incidences
+              </a>
+              <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{% url 'all_incedences'%}">All</a></li>
+                  <li><a class="dropdown-item" href="{% url 'home' %}">Assigned To Me</a></li>
+              </ul>
+          </li>
+            <!-- <li class="nav-item">
+              <a class="nav-link" href="{% url 'login'%}">Profile</a>
+            </li> -->
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'login'%}">Logout</a>
+            </li>
+            {% else %}
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="#">Home</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'login'%}">Signin</a>
             </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Join Us
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'register_hospital' %}">Admin</a></li>
-                <li><a class="dropdown-item" href="{% url 'register_hospital' %}">User</a></li>
-              </ul>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'register_hospital'%}">Register</a>
             </li>
+            {% endif %}
           </ul>
           <form class="d-flex" role="search">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -55,7 +67,7 @@
           <h2 class="small fw-lighter"># Join Us</h2>
           <h1 class="bold" style="font-size: 75px;">Let's Save The World!</h1>
           <h5 class="lh-lg fw-light">We're Better Together 💙</h5>
-          <a class="btn btn-lg btn-primary rounded" href="{% url 'register_hospital'%}">Join Us</a>
+          <a class="btn btn-lg btn-primary rounded" href="{% url 'register_hospital'%}">Register Hospital</a>
         </div>
       </div>
       <div class="col col-md-6">

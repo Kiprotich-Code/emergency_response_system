@@ -37,7 +37,7 @@ class Incidence(models.Model):
     
 
 class Response(models.Model):
-    incident = models.ForeignKey(Incidence, on_delete=models.CASCADE)
-    responders = models.ManyToManyField(CustomUser)
+    incident = models.ForeignKey(Incidence, on_delete=models.CASCADE, related_name="incedence")
+    responders = models.ManyToManyField(CustomUser, related_name="response")
     message = models.TextField()
     

@@ -198,37 +198,26 @@
             Users
         </a>
 
-        <a href="">
+        <a href="{% url 'update_profile'%}">
             <i class="fa fa-location-arrow side-icon me-3"></i>
             Profile
-        </a>
-
-        <a href="">
-            <!-- <i class="fa fa-location-arrow side-icon me-3"></i> -->
-            <i class="fa fa-chart-bar side-icon me-3"></i>
-            History
         </a>
 
         <p class="ms-4 mb-1 mt-3">Notification</p>
 
         <a href="">
             <i class="fa fa-envelope side-icon me-3"></i>
-            Feedback
-        </a>
-
-        <a href="">
-            <i class="fa fa-envelope-open-text side-icon me-3"></i>
-            Contact Us
+            Notification
         </a>
 
         <!-- <a href="#" class="ms-4 mt-5 ps-0">Notification</a> -->
-        <a href="" class="ms-4 ps-0">Sign Out</a>
+        <a href="{% url 'logout' %}" class="ms-4 ps-0">Sign Out</a>
     </div>
 
     <footer class="bg-light font-12 text-center text-lg-start">
         <div class="text-center p-1">
             © 2024 Copyright:
-            <a class="text-dark" href="">MMTVC - LIB</a>
+            <a class="text-dark" href="">Response System</a>
         </div>
     </footer>
 

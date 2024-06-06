@@ -1,0 +1,87 @@
+{% extends './index.html' %}
+{% load static %}
+
+{% block content %}
+<div class="row vh-100">
+    <div class="p-3 col-12 col-lg-8 mb-4 mb-lg-0">  
+        {% block items %}      
+        {% if incedences %}
+        <div class="card">
+            <h5 class="card-header">Incedence assigned to {{request.user}}</h5>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Incident ID</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Time</th>
+                                <th scope="col">Location</th>
+                                <th scope="col">#</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for incident in incedences %}
+                            <tr>
+                                <td>{{incident.id}}</td>
+                                <td>{{incident.incident.status}}</td>
+                                <td>{{incident.incident.time_of_incident }}</td>
+                                <td>{{incident.incident.location}}</td>
+                                <td>
+                                    <a href="{% url 'usr_incident_detail' incident.id %}"
+                                        class="btn btn-sm btn-outline-dark">Details</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                {% comment %} pagination {% endcomment %}
+                <div class='pagination justify-content-center'>
+                    {% if page_obj.has_previous %}
+                    <a href='{% url "user_list" %}?page={{ page_obj.previous_page_number }}'
+                        class="text-decoration-none">Previous </a>
+                    {% endif %}
+
+                    <span class='mx-4'>
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                    </span>
+
+                    {% if page_obj.has_next %}
+                    <a href='{ url "user_list" }?page={{ page_obj.next_page_number }}'
+                        class="text-decoration-none"> Next</a>
+                    {% endif %}
+                </div>
+                <!-- END Pagination -->
+            </div>
+        </div>
+        {% else %}
+        <div class="p-3">
+            <h5 class="small fw-lighter"># It's cool at the moment!</h5>
+            <h3>
+                There are no incidents at the moment!
+            </h3>
+            <button class="btn btn-outline-dark rounded">Look Around While You Wait!</button>
+        </div>
+        {% endif %}
+        {% endblock %}
+    </div>
+    <div class="col card rounded p-4 bg-dark text-white">
+        <img src="{% static 'images/bg.jpg'%}" alt="" style="height: 200px;">
+        <br>
+        <h5 class="text-primary py-2">About</h5>
+        <p>
+            
+        </p>
+
+        <h5 class="text-primary">Code Of Conduct</h5>
+        <h5 class="fw-lighter lh">
+            1. Treat everything as an emergency.<br>
+            2. Treat everyone with respect.<br>
+            3. Frequently update your location to match your movements.<br>
+            4. Strive to help out - we're better together.<br>
+        </h5>
+    </div>
+</div>
+{% endblock %}

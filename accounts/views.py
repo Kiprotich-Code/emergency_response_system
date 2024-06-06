@@ -36,14 +36,14 @@ def signin(request):
         if user is not None:
             login(request, user)
             
-            # redirect users based on roles
-            if user.user_type == 'hospital':
-                messages.success(request, 'Login successful!')
-                return redirect('hospital_home')
-            
-            elif user.is_staff:
+            # redirect users based on role            
+            if user.is_staff:
                 messages.success(request, 'Login successful!')
                 return redirect('dashboard')
+            
+            else:
+                messages.success(request, 'Login successful!')
+                return redirect('home')
         
         else:
             messages.error(request, 'User Does Not Exist!')

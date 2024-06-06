@@ -1,0 +1,54 @@
+{% extends './home.html' %}
+
+{% block content %}
+<div class="p-5">
+    <h5 class="fw-lighter"># All Incidences</h5>
+
+    {% if incidents %}
+
+    <div class="p-3 d-flex flex-wrap gap-2">
+        {% for incident in incidents %}
+        <div class="card" style="width: 20rem;">
+            <h5 class="card-header fw-lighter"><strong>Incident: </strong>{{incident.incidence_type}}</h5>
+            <div class="card-body">
+                {% if incident.call %}
+                <p class="fw-lighter"><strong>Reported by:</strong> {{incident.call.caller_phone}}</p>
+                {% endif %}
+                <p class="fw-lighter"><strong>Status:</strong> {{incident.status}}</p>
+                <p class="fw-lighter"><strong>Time:</strong> {{incident.time_of_incident}}</p>
+                <p class="fw-lighter mb-3"><strong>Location:</strong> {{incident.location}}</p>
+                <hr>
+                <p>
+                    <strong>Description: </strong> {{incident.desc}}
+                </p>
+                <a class="btn btn-sm btn-block btn-outline-primary mb-3" href="{% url 'home'%}">Back Home</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination  -->
+    <div class='pagination justify-content-center'>
+        {% if page_obj.has_previous %}
+        <a href='{% url "user_list" %}?page={{ page_obj.previous_page_number }}' class="text-decoration-none">Previous
+        </a>
+        {% endif %}
+
+        <span class='mx-4'>
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+        <a href='{ url "user_list" }?page={{ page_obj.next_page_number }}' class="text-decoration-none"> Next</a>
+        {% endif %}
+    </div>
+
+    {% else %}
+    <h3 class="text-primary">
+        No Incidences
+    </h3>
+    {% endif %}
+
+</div>
+
+{% endblock %}

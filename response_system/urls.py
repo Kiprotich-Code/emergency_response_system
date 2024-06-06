@@ -1,5 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -7,3 +9,4 @@ urlpatterns = [
     path('', include('main.urls')),
     path('admins/', include('administrator.urls')),
 ]
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

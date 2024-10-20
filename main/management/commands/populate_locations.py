@@ -18,7 +18,7 @@ class Command(BaseCommand):
 
                 for row in location_reader:
                     address = row[0]
-                    location = geolocator.geocode(address)
+                    location = geolocator.geocode(address, timeout=10)
 
                     if location:
                         lon = location.longitude

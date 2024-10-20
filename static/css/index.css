@@ -45,3 +45,15 @@ a {
     background-size: cover;
     background-position: top;
 }
+
+#map {
+    height: 500px;
+}
+
+.head {
+    height: 90vh;
+    background-image: url('../images/bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}

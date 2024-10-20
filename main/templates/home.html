@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="row vh-100">
-    <div class="p-3 col-12 col-lg-8 mb-4 mb-lg-0">  
+    <div class="p-3 col-12 col-lg-8 mb-4 mb-lg-0">          
         {% block items %}      
         {% if incedences %}
         <div class="card">
@@ -40,7 +40,7 @@
                 {% comment %} pagination {% endcomment %}
                 <div class='pagination justify-content-center'>
                     {% if page_obj.has_previous %}
-                    <a href='{% url "user_list" %}?page={{ page_obj.previous_page_number }}'
+                    <a href='{% url "home" %}?page={{ page_obj.previous_page_number }}'
                         class="text-decoration-none">Previous </a>
                     {% endif %}
 
@@ -49,7 +49,7 @@
                     </span>
 
                     {% if page_obj.has_next %}
-                    <a href='{ url "user_list" }?page={{ page_obj.next_page_number }}'
+                    <a href='{ url "home" }?page={{ page_obj.next_page_number }}'
                         class="text-decoration-none"> Next</a>
                     {% endif %}
                 </div>

@@ -7,7 +7,6 @@ from main.models import Location
 class CustomUser(AbstractUser):
     role =[
         ('Responder', 'responder'),
-        ('Hospital', 'hospital'),
         ('Vehicle', 'vehicle'),
     ]
     
